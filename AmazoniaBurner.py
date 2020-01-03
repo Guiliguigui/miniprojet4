@@ -35,6 +35,22 @@ if __name__=='__main__':
     canvas = Canvas(root, width = canvas_width, height = canvas_height)
     canvas.pack()
 
-    canvas.create_rectangle(0,0,cell_size,cell_size,fill="green")
+    carte = [['v' for i in range(10)] for i in range(10)]
+    ids = [[0 for i in range(10)] for i in range(10)]
+    for row in range(rows):
+        for col in range(cols):
+            if(random.random()<afforestation):
+                carte[row][col] = 'a'
+                ids[row][col] = canvas.create_rectangle(col * cell_size,
+                                                        row * cell_size,
+                                                        (col + 1) * cell_size,
+                                                        (row + 1) * cell_size,
+                                                        fill="green")
+            else:
+                ids[row][col] = canvas.create_rectangle(col * cell_size,
+                                                        row * cell_size,
+                                                        (col + 1) * cell_size,
+                                                        (row + 1) * cell_size,
+                                                        fill="white")
 
     root.mainloop()
