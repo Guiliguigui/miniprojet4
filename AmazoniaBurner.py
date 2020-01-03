@@ -36,6 +36,16 @@ def afficherCarte(carte,ids):
                                                         (row + 1) * cell_size,
                                                         fill="white")
 
+def click_callback(event):
+    row = int(event.y / cell_size)
+    col = int(event.x / cell_size)
+    if(carte[row][col]=='a'):
+        carte[row][col] = 'f'
+        canvas.itemconfig(ids[row][col], fill="red")
+    elif(carte[row][col]=='f'):
+        carte[row][col] = 'a'
+        canvas.itemconfig(ids[row][col], fill="green")
+
 
 
 if __name__=='__main__':
@@ -73,5 +83,6 @@ if __name__=='__main__':
             
     afficherCarte(carte,ids)
 
+    canvas.bind('<Button-1>',click_callback)
 
     root.mainloop()
