@@ -8,6 +8,35 @@ from tkinter import *
 import argparse
 import random
 
+def afficherCarte(carte,ids):
+    for row in range(len(carte)):
+        for col in range(len(carte[row])):
+            if(carte[row][col]=='a'):
+                ids[row][col] = canvas.create_rectangle(col * cell_size,
+                                                        row * cell_size,
+                                                        (col + 1) * cell_size,
+                                                        (row + 1) * cell_size,
+                                                        fill="green")
+            elif(carte[row][col]=='f'):
+                ids[row][col] = canvas.create_rectangle(col * cell_size,
+                                                        row * cell_size,
+                                                        (col + 1) * cell_size,
+                                                        (row + 1) * cell_size,
+                                                        fill="red")
+            elif(carte[row][col]=='c'):
+                ids[row][col] = canvas.create_rectangle(col * cell_size,
+                                                        row * cell_size,
+                                                        (col + 1) * cell_size,
+                                                        (row + 1) * cell_size,
+                                                        fill="grey")
+            elif(carte[row][col]=='v'):
+                ids[row][col] = canvas.create_rectangle(col * cell_size,
+                                                        row * cell_size,
+                                                        (col + 1) * cell_size,
+                                                        (row + 1) * cell_size,
+                                                        fill="white")
+
+
 
 if __name__=='__main__':
 
@@ -41,16 +70,8 @@ if __name__=='__main__':
         for col in range(cols):
             if(random.random()<afforestation):
                 carte[row][col] = 'a'
-                ids[row][col] = canvas.create_rectangle(col * cell_size,
-                                                        row * cell_size,
-                                                        (col + 1) * cell_size,
-                                                        (row + 1) * cell_size,
-                                                        fill="green")
-            else:
-                ids[row][col] = canvas.create_rectangle(col * cell_size,
-                                                        row * cell_size,
-                                                        (col + 1) * cell_size,
-                                                        (row + 1) * cell_size,
-                                                        fill="white")
+            
+    afficherCarte(carte,ids)
+
 
     root.mainloop()
