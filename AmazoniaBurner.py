@@ -1,5 +1,5 @@
 """
-
+The AmazoniaBurner module is used to simulate a wild fire using a celular automaton.
 
 """
 __author__ = "Victor Dupré, Guillaume Mairesse and Andréas Pierre"
@@ -9,6 +9,10 @@ import argparse
 import random
 
 def showMap():
+    """
+    Show the map at the launch off the application.
+
+    """
     for row in range(rows):
         for col in range(cols):
             if(data[row][col]=='a'):
@@ -17,18 +21,6 @@ def showMap():
                                                         (col + 1) * cell_size,
                                                         (row + 1) * cell_size,
                                                         fill="green")
-            elif(data[row][col]=='f'):
-                ids[row][col] = canvas.create_rectangle(col * cell_size,
-                                                        row * cell_size,
-                                                        (col + 1) * cell_size,
-                                                        (row + 1) * cell_size,
-                                                        fill="red")
-            elif(data[row][col]=='c'):
-                ids[row][col] = canvas.create_rectangle(col * cell_size,
-                                                        row * cell_size,
-                                                        (col + 1) * cell_size,
-                                                        (row + 1) * cell_size,
-                                                        fill="grey")
             elif(data[row][col]=='v'):
                 ids[row][col] = canvas.create_rectangle(col * cell_size,
                                                         row * cell_size,
@@ -36,7 +28,28 @@ def showMap():
                                                         (row + 1) * cell_size,
                                                         fill="white")
 
+def updateMap():
+    """
+    Update the map.
+    
+    """
+    for row in range(rows):
+        for col in range(cols):
+            if(data[row][col]=='a'):
+                canvas.itemconfig(ids[row][col],fill="green")
+            elif(data[row][col]=='f'):
+                canvas.itemconfig(ids[row][col],fill="red")
+            elif(data[row][col]=='c'):
+                canvas.itemconfig(ids[row][col],fill="grey")
+            elif(data[row][col]=='v'):
+                canvas.itemconfig(ids[row][col],fill="white")
+
+
 def click_callback(event):
+    """
+    Set or extinguish fire at the position where the user has clicked.
+    
+    """
     row = int(event.y / cell_size)
     col = int(event.x / cell_size)
     if(data[row][col]=='a'):
@@ -47,6 +60,10 @@ def click_callback(event):
         canvas.itemconfig(ids[row][col], fill="green")
 
 def launch():
+    """
+    Used to launch and animate the simulation.
+    
+    """
     future_data = [['v' for i in range(cols)] for i in range(rows)]
     for row in range(rows):
         for col in range(cols):
@@ -75,7 +92,7 @@ def launch():
     for row in range(rows):
         for col in range(cols):
             data[row][col] = future_data[row][col]
-    showMap()
+    updateMap()
     root.after(int(duration*1000),launch)
 
 
@@ -106,9 +123,6 @@ if __name__=='__main__':
     canvas = Canvas(root, width = canvas_width, height = canvas_height)
     canvas.grid(column=0, row=0)
 
-    btnLaunch = Button(root, text = "Launch", command = launch)
-    btnLaunch.grid(column=0,row=1)
-
     data = [['v' for i in range(cols)] for i in range(rows)]
     ids = [[0 for i in range(cols)] for i in range(rows)]
     for row in range(rows):
@@ -119,5 +133,8 @@ if __name__=='__main__':
     showMap()
 
     canvas.bind('<Button-1>',click_callback)
+    
+    btnLaunch = Button(root, text = "Launch", command = launch)
+    btnLaunch.grid(column=0,row=1)
 
     root.mainloop()
